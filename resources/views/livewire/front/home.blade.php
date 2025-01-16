@@ -16,10 +16,7 @@
             <div class="page-body">
                 <div class="card">
                     <div class="card-body">
-                        <span>Hai guys !, Sabar ya websitenya masih proses</span>
-                        <br>
-                        <div class="fw-bold" wire:poll.1s>
-                        </div>
+                        <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
                     </div>
                 </div>
             </div>

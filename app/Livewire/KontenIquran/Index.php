@@ -4,6 +4,7 @@ namespace App\Livewire\KontenIquran;
 use App\Models\KontenIquran;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -55,6 +56,7 @@ class Index extends Component
     {
         DB::transaction(function () {
             $data = KontenIquran::find($this->delete_id);
+            Storage::delete($data->path_konten);
             $data->delete();
             session()->flash('alert', 'KontenIquran successfully deleted !');
         });
