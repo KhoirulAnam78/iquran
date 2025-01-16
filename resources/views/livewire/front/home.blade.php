@@ -16,7 +16,18 @@
             <div class="page-body">
                 <div class="card">
                     <div class="card-body">
-                        <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+                        <a href="{{ route('login') }}" class="btn btn-primary my-3">Login</a>
+                        <br> <br>
+                        <p>Silahkan login terlebih dahulu, <br>
+                            untuk mengelola konten dapat mengakses Menu Master Data -> Konten Iquran </p>
+                        <br>
+                        <h2>Dokumentasi API</h2>
+                        1. Get Konten
+                        <ul>
+                            <li>Method : GET</li>
+                            <li>URL : {{ url('/api/get-content/{nama_key}') }}</li>
+                        </ul>
+                        <span class="text-danger">NOTE : nama_key diperoleh dari Data Master -> Konten Iquran</span>
                     </div>
                 </div>
             </div>
