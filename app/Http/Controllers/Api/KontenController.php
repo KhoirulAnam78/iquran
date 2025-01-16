@@ -10,25 +10,32 @@ class KontenController extends Controller
     public function index($key)
     {
         $konten = KontenIquran::where('nama_key', $key)->first();
-        $path   = storage_path('app/public/' . $konten->path_konten);
+        if ($konten) {
+            $path = storage_path('app/public/' . $konten->path_konten);
 
-        if ($konten->jenis == 'video') {
-            $response = new StreamedResponse(function () use ($path) {
-                $stream = fopen($path, 'rb');
-                while (! feof($stream)) {
-                    echo fread($stream, 1024 * 8); // Adjust buffer size as needed
-                    flush();
-                }
-                fclose($stream);
-            });
+            if ($konten->jenis == 'video') {
+                $response = new StreamedResponse(function () use ($path) {
+                    $stream = fopen($path, 'rb');
+                    while (! feof($stream)) {
+                        echo fread($stream, 1024 * 8); // Adjust buffer size as needed
+                        flush();
+                    }
+                    fclose($stream);
+                });
 
-            $response->headers->set('Content-Type', 'video/mp4'); // Set the appropriate MIME type for the video format
-            $response->headers->set('Content-Length', filesize($path));
-            $response->headers->set('Accept-Ranges', 'bytes');
+                $response->headers->set('Content-Type', 'video/mp4'); // Set the appropriate MIME type for the video format
+                $response->headers->set('Content-Length', filesize($path));
+                $response->headers->set('Accept-Ranges', 'bytes');
 
-            return $response;
+                return $response;
+            } else {
+                return response()->download($path);
+            }
         } else {
-            return response()->download($path);
+            return response()->json([
+                'status'  => '404',
+                'message' => 'Content not found !',
+            ]);
         }
 
     }
