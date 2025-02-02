@@ -14,10 +14,25 @@ class KontenController extends Controller
             $path = storage_path('app/public/' . $konten->path_konten);
 
             if ($konten->jenis == 'video') {
+                // $response = new StreamedResponse(function () use ($path) {
+                //     $stream = fopen($path, 'rb');
+                //     while (! feof($stream)) {
+                //         echo fread($stream); // Adjust buffer size as needed
+                //         flush();
+                //     }
+                //     fclose($stream);
+                // });
+
+                // $response->headers->set('Content-Type', 'video/mp4'); // Set the appropriate MIME type for the video format
+                // $response->headers->set('Content-Length', filesize($path));
+                // $response->headers->set('Accept-Ranges', 'bytes');
+
+                // return $response;
+
                 $response = new StreamedResponse(function () use ($path) {
                     $stream = fopen($path, 'rb');
                     while (! feof($stream)) {
-                        echo fread($stream, 1024 * 8); // Adjust buffer size as needed
+                        echo fread($stream, 8192); // Adjust buffer size as needed
                         flush();
                     }
                     fclose($stream);
@@ -27,13 +42,19 @@ class KontenController extends Controller
                 $response->headers->set('Content-Length', filesize($path));
                 $response->headers->set('Accept-Ranges', 'bytes');
 
+// Add CORS headers
+                $response->headers->set('Access-Control-Allow-Origin', '*');             // Allow all origins, or specify a specific origin like 'https://your-frontend-domain.com'
+                $response->headers->set('Access-Control-Allow-Methods', 'GET, OPTIONS'); // Allow specific HTTP methods
+                $response->headers->set('Access-Control-Allow-Headers', 'Content-Type'); // Allow specific headers
+
                 return $response;
+
             } else {
                 return response()->download($path);
             }
         } else {
             return response()->json([
-                'status'  => '404',
+                'status' => '404',
                 'message' => 'Content not found !',
             ]);
         }
