@@ -29,23 +29,49 @@ class KontenController extends Controller
 
                 // return $response;
 
+//                 $response = new StreamedResponse(function () use ($path) {
+                //                     $stream = fopen($path, 'rb');
+                //                     while (! feof($stream)) {
+                //                         echo fread($stream, 8192); // Adjust buffer size as needed
+                //                         flush();
+                //                     }
+                //                     fclose($stream);
+                //                 });
+
+//                 $response->headers->set('Content-Type', 'video/mp4'); // Set the appropriate MIME type for the video format
+                //                 $response->headers->set('Content-Length', filesize($path));
+                //                 $response->headers->set('Accept-Ranges', 'bytes');
+
+// // Add CORS headers
+                //                 $response->headers->set('Access-Control-Allow-Origin', '*');             // Allow all origins, or specify a specific origin like 'https://your-frontend-domain.com'
+                //                 $response->headers->set('Access-Control-Allow-Methods', 'GET, OPTIONS'); // Allow specific HTTP methods
+                //                 $response->headers->set('Access-Control-Allow-Headers', 'Content-Type'); // Allow specific headers
+
+//                 return $response;
+
                 $response = new StreamedResponse(function () use ($path) {
                     $stream = fopen($path, 'rb');
+                    $bufferSize = 1024 * 1024; // 1 MB buffer size
+
+                    ob_start(); // Enable output buffering
                     while (! feof($stream)) {
-                        echo fread($stream, 8192); // Adjust buffer size as needed
+                        echo fread($stream, $bufferSize);
+                        ob_flush(); // Flush the output buffer
                         flush();
                     }
+                    ob_end_clean(); // Clean the output buffer
+
                     fclose($stream);
                 });
 
-                $response->headers->set('Content-Type', 'video/mp4'); // Set the appropriate MIME type for the video format
+                $response->headers->set('Content-Type', 'video/mp4');
                 $response->headers->set('Content-Length', filesize($path));
                 $response->headers->set('Accept-Ranges', 'bytes');
 
-// Add CORS headers
-                $response->headers->set('Access-Control-Allow-Origin', '*');             // Allow all origins, or specify a specific origin like 'https://your-frontend-domain.com'
-                $response->headers->set('Access-Control-Allow-Methods', 'GET, OPTIONS'); // Allow specific HTTP methods
-                $response->headers->set('Access-Control-Allow-Headers', 'Content-Type'); // Allow specific headers
+// CORS headers
+                $response->headers->set('Access-Control-Allow-Origin', '*');
+                $response->headers->set('Access-Control-Allow-Methods', 'GET, OPTIONS');
+                $response->headers->set('Access-Control-Allow-Headers', 'Content-Type');
 
                 return $response;
 
