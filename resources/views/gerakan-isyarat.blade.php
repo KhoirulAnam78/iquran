@@ -125,6 +125,7 @@
     </div>
 
     <script type="module">
+        let url = "{{ url('') }}";
         import {
             HandLandmarker,
             FilesetResolver
@@ -171,8 +172,8 @@
 
                 // Load gesture classification model & labels
                 gestureModel = await tflite.loadTFLiteModel(
-                    'http://iquran.test/assets/models/hand_landmark_model.tflite');
-                const labelRes = await fetch('http://iquran.test/assets/models/labels.txt');
+                    url + '/assets/models/hand_landmark_model.tflite');
+                const labelRes = await fetch(url + '/assets/models/labels.txt');
                 gestureLabels = (await labelRes.text()).trim().split('\n');
 
                 updateStatus("Starting camera...");
