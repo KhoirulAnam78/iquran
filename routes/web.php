@@ -19,6 +19,10 @@ Route::get('/prediksi-gerakan-isyarat-quran', function () {
     return view('gerakan-isyarat');
 });
 
+Route::get('phpinfo', function () {
+    return phpinfo();
+});
+
 // Route::get('/dashboard',App\Livewire\Dashboard\Index::class )->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
