@@ -15,11 +15,11 @@ class Create extends Component
     public function save()
     {
         $this->validate([
-            'nama_key'    => 'required|unique:konten_iquran,nama_key',
+            'nama_key' => 'required|unique:konten_iquran,nama_key',
             'nama_konten' => 'required',
-            'deskripsi'   => 'required',
-            'jenis'       => 'required',
-            'file'        => 'required|file',
+            'deskripsi' => 'required',
+            'jenis' => 'required',
+            'file' => 'required|file|max:20480',
         ]);
 
         DB::transaction(function () {
@@ -31,12 +31,12 @@ class Create extends Component
             }
 
             $konten = KontenIquran::create([
-                'nama_key'    => $this->nama_key,
+                'nama_key' => $this->nama_key,
                 'nama_konten' => $this->nama_konten,
                 'path_konten' => $path,
-                'jenis'       => $this->jenis,
-                'deskripsi'   => $this->deskripsi,
-                'created_by'  => auth()->user()->username,
+                'jenis' => $this->jenis,
+                'deskripsi' => $this->deskripsi,
+                'created_by' => auth()->user()->username,
             ]);
 
             session()->flash('alert', 'New content successfully added !');
