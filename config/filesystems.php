@@ -29,7 +29,10 @@ return [
     */
 
     'disks' => [
-
+        'livewire-tmp' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/livewire-tmp'),
+        ],
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
@@ -39,7 +42,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
