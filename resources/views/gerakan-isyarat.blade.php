@@ -39,9 +39,11 @@
         #container {
             position: relative;
             width: 100%;
-            flex-grow: 1;
+            height: 70vh;
+            /* 70% dari tinggi viewport */
             overflow: hidden;
             background: black;
+            margin: 0 auto;
         }
 
         video {
@@ -69,6 +71,8 @@
             flex-direction: column;
             gap: 10px;
             box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            height: calc(30vh - 30px);
+            /* Sisa tinggi untuk controls */
         }
 
         .loading {
@@ -101,10 +105,12 @@
 
             #container {
                 width: 70%;
+                height: 100vh;
             }
 
             .controls {
                 width: 30%;
+                height: 100vh;
                 justify-content: center;
             }
         }
