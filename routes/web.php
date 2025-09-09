@@ -18,6 +18,9 @@ Route::get('/', App\Livewire\Front\Home::class)->name('home');
 Route::get('/prediksi-gerakan-isyarat-quran', function () {
     return view('gerakan-isyarat');
 });
+Route::get('/prediksi-gerakan-isyarat-quran-2', function () {
+    return view('gerakan-isyarat-2');
+});
 
 Route::get('phpinfo', function () {
     return phpinfo();
