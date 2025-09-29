@@ -1,10 +1,11 @@
 <?php
 namespace App\Livewire\KontenIquran;
 
-use App\Models\KontenIquran;
-use Illuminate\Support\Facades\DB;
+use Log;
 use Livewire\Component;
+use App\Models\KontenIquran;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\DB;
 
 class Create extends Component
 {
@@ -25,9 +26,30 @@ class Create extends Component
         DB::transaction(function () {
             // create konten
 
-            $path = null;
+            // $path = null;
+            // if ($this->file) {
+            //     $path = $this->file->store('uploads', 'public');
+            // }
+
+            // Debug proses penyimpanan
             if ($this->file) {
-                $path = $this->file->store('uploads', 'public');
+                Log::info('File detected:', [
+                    'original_name' => $this->file->getClientOriginalName(),
+                    'size' => $this->file->getSize(),
+                    'mime_type' => $this->file->getMimeType()
+                ]);
+
+                try {
+                    $path = $this->file->store('uploads', 'public');
+                    
+                    Log::info('Store result:', [
+                        'path' => $path,
+                        'full_disk_path' => Storage::disk('public')->path($path),
+                        'file_exists' => Storage::disk('public')->exists($path) ? 'YES' : 'NO'
+                    ]);
+                } catch (\Exception $e) {
+                    Log::error('Store error: ' . $e->getMessage());
+                }
             }
 
             $konten = KontenIquran::create([
