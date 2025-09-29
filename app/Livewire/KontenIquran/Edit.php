@@ -41,9 +41,9 @@ class Edit extends Component
             $path = $this->old_path;
             if ($this->file) {
                 if ($this->old_path) {
-                    Storage::delete($this->old_path);
+                    Storage::disk('public')->delete($this->old_path);
                 }
-                $path = $this->file->store('uploads');
+                $path = $this->file->store('uploads','public');
             }
             // create permission
             $konten = KontenIquran::where('id_konten', $this->edit_id)->update([

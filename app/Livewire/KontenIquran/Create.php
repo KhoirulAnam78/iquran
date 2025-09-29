@@ -27,7 +27,7 @@ class Create extends Component
 
             $path = null;
             if ($this->file) {
-                $path = $this->file->store('uploads');
+                $path = $this->file->store('uploads', 'public');
             }
 
             $konten = KontenIquran::create([
