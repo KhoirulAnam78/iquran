@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\KontenIquran;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class Create extends Component
 {
