@@ -45,6 +45,14 @@ Route::middleware('auth')->group(function () {
     Route::get('konten/add', \App\Livewire\KontenIquran\Create::class)->name('konten.create');
     Route::get('konten/edit/{id}', \App\Livewire\KontenIquran\Edit::class)->name('konten.edit');
 
+    Route::get('appversion', \App\Livewire\AppVersion\Index::class)->name('appversion.index');
+    Route::get('appversion/add', \App\Livewire\AppVersion\Create::class)->name('appversion.create');
+    Route::get('appversion/edit/{id}', \App\Livewire\AppVersion\Update::class)->name('appversion.edit');
+    
+    Route::get('modelversion', \App\Livewire\ModelVersion\Index::class)->name('modelversion.index');
+    Route::get('modelversion/add', \App\Livewire\ModelVersion\Create::class)->name('modelversion.create');
+    Route::get('modelversion/edit/{id}', \App\Livewire\ModelVersion\Update::class)->name('modelversion.edit');
+
     Route::get('user', \App\Livewire\Users\Index::class)->name('user.index');
     Route::get('user/add', \App\Livewire\Users\Create::class)->name('user.create');
     Route::get('user/edit/{id}', \App\Livewire\Users\Edit::class)->name('user.edit');
