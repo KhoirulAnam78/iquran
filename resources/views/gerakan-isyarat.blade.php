@@ -1,3 +1,13 @@
+@php
+    use App\Models\ModelVersion;
+
+        $label = ModelVersion::where('status', 1)->where('type', 'label')->first();
+        $label_url = url('').'/api/download-label?id='.$label->id_model_version;
+        
+        $model = ModelVersion::where('status', 1)->where('type', 'model')->first();
+        $model_url = url('').'/api/download-model?id='.$model->id_model_version;
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -176,10 +186,17 @@
 
                 updateStatus("Loading gesture model...");
 
+                const modelUrl = "{{ $model_url }}";
+                const labelUrl = "{{ $label_url }}";
+                console.log("CUAWWWWW");
                 // Load gesture classification model & labels
-                gestureModel = await tflite.loadTFLiteModel(
-                    url + '/assets/models/hand_landmark_model.tflite');
-                const labelRes = await fetch(url + '/assets/models/labels.txt');
+                // gestureModel = await tflite.loadTFLiteModel(
+                //     url + '/assets/models/hand_landmark_model.tflite');
+                // const labelRes = await fetch(url + '/assets/models/labels.txt');
+                
+                gestureModel = await tflite.loadTFLiteModel(modelUrl);
+                const labelRes = await fetch(labelUrl);
+
                 gestureLabels = (await labelRes.text()).trim().split('\n');
 
                 updateStatus("Starting camera...");
