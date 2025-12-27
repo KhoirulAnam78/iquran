@@ -1,7 +1,7 @@
 <?php
-namespace App\Livewire\Appversion;
+namespace App\Livewire\AppVersion;
 
-use App\Models\Appversion;
+use App\Models\AppVersion;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +21,7 @@ class Index extends Component
 
     public function render()
     {
-        $konten = Appversion::query()
+        $konten = AppVersion::query()
             ->when(! blank($this->search), function ($query) {
                 return $query
                     ->where('version', 'like', '%' . $this->search . '%')
@@ -47,16 +47,16 @@ class Index extends Component
         $decrypt         = Crypt::decryptString($id);
         $this->delete_id = $decrypt;
 
-        $data = Appversion::find($decrypt);
+        $data = AppVersion::find($decrypt);
         session()->flash('delete-confirm', 'Apakah anda yakin menghapus data "' . $data->version . '" ?');
     }
 
     public function delete()
     {
         DB::transaction(function () {
-            $data = Appversion::find($this->delete_id);
+            $data = AppVersion::find($this->delete_id);
             $data->delete();
-            session()->flash('alert', 'Appversion successfully deleted !');
+            session()->flash('alert', 'AppVersion successfully deleted !');
         });
     }
 
